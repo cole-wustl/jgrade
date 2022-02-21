@@ -1,8 +1,11 @@
 package com.github.tkutcher.jgrade.gradedtest;
 
-import org.junit.runner.Description;
-import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+//import org.junit.runner.Description;
+//import org.junit.runner.notification.Failure;
+//import org.junit.runner.notification.RunListener;
+import org.junit.jupiter.api.extension;
+import org.junit.platform.suite.api;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

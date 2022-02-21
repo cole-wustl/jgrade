@@ -1,6 +1,6 @@
 package com.github.tkutcher.jgrade;
 
-import org.junit.Before;
+import org.junit.jupiter.api.Before;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -73,7 +73,7 @@ public abstract class CLITester {
 
     /**
      * Get the invocation for the CLI program. {@link #initCommand()} (which
-     * is annotated with @Before) calls this method to set the command.
+     * is annotated with @BeforeEach) calls this method to set the command.
      * Subclasses implement this method to tell it how to setup the command.
      * For example, if a user had main program <code>Hello</code>, they may
      * do the following to implement this method:
@@ -86,10 +86,10 @@ public abstract class CLITester {
 
     /**
      * Initializes the command for the test (and is annotated with
-     * {@link Before}. Calls the abstract {@link #getInvocation()} and
+     * {@link BeforeEach}. Calls the abstract {@link #getInvocation()} and
      * initializes a new {@link ProcessBuilder}.
      */
-    @Before
+    @BeforeEach
     public void initCommand() {
         this.command = getInvocation();
         this.builder = new ProcessBuilder();

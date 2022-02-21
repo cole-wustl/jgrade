@@ -2,7 +2,10 @@ package com.github.tkutcher.jgrade;
 
 import com.github.tkutcher.jgrade.gradedtest.GradedTestListener;
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
-import org.junit.runner.JUnitCore;
+//import org.junit.runner.JUnitCore;
+import org.junit.jupiter.api.extension;
+import org.junit.platform.suite.api;
+
 
 import java.util.ArrayList;
 import java.util.List;

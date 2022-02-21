@@ -1,21 +1,22 @@
 package com.github.tkutcher.jgrade;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class CLITesterExecutionResultTest {
 
     @Test
     public void getStdout() {
         CLIResult unit = new CLITester.ExecutionResult("test1", "", 1);
-        assertEquals("test1", unit.getOutput(CLIResult.STREAM.STDOUT));
+        assertEquals(unit.getOutput(CLIResult.STREAM.STDOUT), "test1");
     }
 
     @Test
     public void getByLineOnEmptyString() {
         CLIResult unit = new CLITester.ExecutionResult("test1", "", 1);
-        assertEquals(0, unit.getOutputByLine(CLIResult.STREAM.STDERR).size());
+        assertEquals(unit.getOutputByLine(CLIResult.STREAM.STDERR).size(), 0);
     }
 
     @Test

@@ -1,14 +1,14 @@
 package com.github.tkutcher.jgrade;
 
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.tkutcher.jgrade.gradedtest.GradedTestResult.HIDDEN;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DeductiveGraderStrategyTest {
 
@@ -17,7 +17,7 @@ public class DeductiveGraderStrategyTest {
 
     private DeductiveGraderStrategy unit;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         this.unit = new DeductiveGraderStrategy(STARTING_SCORE, "blah");
     }
@@ -46,12 +46,12 @@ public class DeductiveGraderStrategyTest {
         this.unit.grade(l);
 
         for (GradedTestResult r : l.subList(0, l.size() - 1)) {
-            assertEquals(0, r.getPoints(), 0.0);
-            assertEquals(0, r.getScore(), 0.0);
+            assertEquals(r.getPoints(), 0.0, 0);
+            assertEquals(r.getScore(), 0.0, 0);
         }
 
-        assertEquals(0, unit.getDeductedPoints(), 0.0);
-        assertEquals(STARTING_SCORE, l.get(l.size() - 1).getScore(), 0.0);
+        assertEquals(unit.getDeductedPoints(), 0.0, 0);
+        assertEquals(l.get(l.size() - 1).getScore(), 0.0, STARTING_SCORE);
     }
 
     @Test
@@ -62,12 +62,12 @@ public class DeductiveGraderStrategyTest {
         this.unit.grade(l);
 
         for (GradedTestResult r : l.subList(0, l.size() - 1)) {
-            assertEquals(0, r.getPoints(), 0.0);
-            assertEquals(0 - STARTING_SCORE, r.getScore(), 0.0);
+            assertEquals(r.getPoints(), 0.0, 0);
+            assertEquals(r.getScore(), 0.0, 0 - STARTING_SCORE);
         }
 
-        assertEquals(STARTING_SCORE, unit.getDeductedPoints(), 0.0);
-        assertEquals(STARTING_SCORE, l.get(l.size() - 1).getScore(), 0.0);
+        assertEquals(unit.getDeductedPoints(), 0.0, STARTING_SCORE);
+        assertEquals(l.get(l.size() - 1).getScore(), 0.0, STARTING_SCORE);
     }
 
     @Test
@@ -78,10 +78,10 @@ public class DeductiveGraderStrategyTest {
 
         this.unit.grade(l);
 
-        assertEquals(0 - STARTING_SCORE + 2, l.get(0).getScore(), 0.0);
-        assertEquals(-2, l.get(1).getScore(), 0.0);
-        assertEquals(STARTING_SCORE, unit.getDeductedPoints(), 0.0);
-        assertEquals(STARTING_SCORE, l.get(l.size() - 1).getScore(), 0.0);
+        assertEquals(l.get(0).getScore(), 0.0, 0 - STARTING_SCORE + 2);
+        assertEquals(l.get(1).getScore(), 0.0, -2);
+        assertEquals(unit.getDeductedPoints(), 0.0, STARTING_SCORE);
+        assertEquals(l.get(l.size() - 1).getScore(), 0.0, STARTING_SCORE);
     }
 
     @Test
@@ -91,9 +91,9 @@ public class DeductiveGraderStrategyTest {
 
         this.unit.grade(l);
 
-        assertEquals(0 - STARTING_SCORE, l.get(0).getScore(), 0.0);
-        assertEquals(STARTING_SCORE, unit.getDeductedPoints(), 0.0);
-        assertEquals(STARTING_SCORE, l.get(l.size() - 1).getScore(), 0.0);
+        assertEquals(l.get(0).getScore(), 0.0, 0 - STARTING_SCORE);
+        assertEquals(unit.getDeductedPoints(), 0.0, STARTING_SCORE);
+        assertEquals(l.get(l.size() - 1).getScore(), 0.0, STARTING_SCORE);
     }
 
     @Test
@@ -105,8 +105,8 @@ public class DeductiveGraderStrategyTest {
 
         this.unit.grade(l);
 
-        assertEquals(0 - STARTING_SCORE + FLOOR, l.get(0).getScore(), 0.0);
-        assertEquals(STARTING_SCORE - FLOOR, unit.getDeductedPoints(), 0.0);
-        assertEquals(STARTING_SCORE, l.get(l.size() - 1).getScore(), 0.0);
+        assertEquals(l.get(0).getScore(), 0.0, 0 - STARTING_SCORE + FLOOR);
+        assertEquals(unit.getDeductedPoints(), 0.0, STARTING_SCORE - FLOOR);
+        assertEquals(l.get(l.size() - 1).getScore(), 0.0, STARTING_SCORE);
     }
 }

@@ -1,13 +1,15 @@
 package com.github.tkutcher.jgrade.gradedtest;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.JUnitCore;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.Test;
+
+//import org.junit.runner.JUnitCore;
+import org.junit.jupiter.api.extension;
+import org.junit.platform.suite.api;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 
 public class GradedTestListenerTest {
@@ -20,7 +22,7 @@ public class GradedTestListenerTest {
 
     private GradedTestListener listener;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         this.listener = new GradedTestListener();
     }

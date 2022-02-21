@@ -3,15 +3,15 @@ package com.github.tkutcher.jgrade;
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.After;
+import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JGradeCommandLineTest {
 
@@ -20,7 +20,7 @@ public class JGradeCommandLineTest {
     private ByteArrayOutputStream captureOut;
     private ByteArrayOutputStream captureErr;
 
-    @Before
+    @BeforeEach
     public void captureOutput() {
         origOut = System.out;
         origErr = System.err;
@@ -30,20 +30,24 @@ public class JGradeCommandLineTest {
         System.setErr(new PrintStream(captureErr));
     }
 
-    @After
+    @AfterEach
     public void resetOutput() { ;
         System.setOut(origOut);
         System.setErr(origErr);
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void unknownFlagExits() {
-        JGrade.main(new String[] {"-blah"});
+        Assertions.assertThrows(RuntimeException.class, () -> {
+          JGrade.main(new String[] {"-blah"});
+        });
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void requiresClassFlag() {
-        JGrade.main(new String[] {"-f", "json"});
+        Assertions.assertThrows(RuntimeException.class, () -> {
+          JGrade.main(new String[] {"-f", "json"});
+        });
     }
 
     @Test
@@ -61,14 +65,18 @@ public class JGradeCommandLineTest {
         JGrade.main(new String[] {"--format", "json", "-c", this.getClass().getCanonicalName()});
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void rejectsNonExistentClass() {
-        JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
+        Assertions.assertThrows(RuntimeException.class, () -> {
+          JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
+        });
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void rejectsInvalidFormatArguments() {
-        JGrade.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
+        Assertions.assertThrows(RuntimeException.class, () -> {
+          JGrade.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
+        });
     }
 
     @Test
@@ -78,7 +86,7 @@ public class JGradeCommandLineTest {
         assertTrue(json.has("tests"));
         JSONObject gradedTestResult = (JSONObject) json.getJSONArray("tests").get(0);
         assertTrue(gradedTestResult.has("name"));
-        assertEquals("Test GradedTestResult", gradedTestResult.get("name"));
+        assertEquals(gradedTestResult.get("name"), "Test GradedTestResult");
     }
 
     @Grade

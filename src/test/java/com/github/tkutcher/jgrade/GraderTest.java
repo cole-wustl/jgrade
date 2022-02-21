@@ -1,20 +1,20 @@
 package com.github.tkutcher.jgrade;
 
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class GraderTest {
 
     private Grader unit;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         unit = new Grader();
     }
@@ -32,11 +32,11 @@ public class GraderTest {
     public void canSetAndAccessBasicMembers() {
         unit.setMaxScore(25.0);
         assertTrue(unit.hasMaxScore());
-        assertEquals(25.0, unit.getMaxScore(), 0.0);
+        assertEquals(unit.getMaxScore(), 0.0, 25.0);
 
         unit.setScore(20.0);
         assertTrue(unit.hasScore());
-        assertEquals(20.0, unit.getScore(), 0.0);
+        assertEquals(unit.getScore(), 0.0, 20.0);
 
         unit.setExecutionTime(5000);
         assertTrue(unit.hasExecutionTime());
@@ -71,7 +71,7 @@ public class GraderTest {
 
         assertTrue(unit.hasExecutionTime());
         // FIXME - Not sure how deterministic, but hopefully ok? Using big delta
-        assertEquals((double) 400, (double) unit.getExecutionTime(), 10.0);
+        assertEquals((double) unit.getExecutionTime(), 10.0, (double) 400);
     }
 
     @Test
@@ -91,9 +91,11 @@ public class GraderTest {
         assertTrue(unit.getExecutionTime() > atPause);
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void cannotStopTimerIfNotStarted() {
+        Assertions.assertThrows(IllegalStateException.class, () -> {
         unit.stopTimer();
+        });
     }
 
 }

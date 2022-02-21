@@ -1,15 +1,15 @@
 package com.github.tkutcher.jgrade.gradedtest;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GradedTestResultTest {
 
     private GradedTestResult unit;
 
-    @Before
+    @BeforeEach
     public void initUnit() {
         this.unit = new GradedTestResult(
                 GradedTestResult.DEFAULT_NAME,
@@ -23,7 +23,7 @@ public class GradedTestResultTest {
     public void hasCorrectParams() {
         assertEquals(GradedTestResult.DEFAULT_NAME, unit.getName());
         assertEquals(GradedTestResult.DEFAULT_NUMBER, unit.getNumber());
-        assertEquals(GradedTestResult.DEFAULT_POINTS, unit.getPoints(), 0.0);
+        assertEquals(unit.getPoints(), 0.0, GradedTestResult.DEFAULT_POINTS);
         assertEquals(GradedTestResult.DEFAULT_VISIBILITY, unit.getVisibility());
     }
 
@@ -34,7 +34,7 @@ public class GradedTestResultTest {
 
     @Test
     public void startsWithNoScore() {
-        assertEquals(0, unit.getScore(), 0.0);
+        assertEquals(unit.getScore(), 0.0, 0);
     }
 
     @Test
@@ -52,20 +52,24 @@ public class GradedTestResultTest {
     public void canAddScore() {
         double score1 = 0.5;
         double score2 = 0.75;
-        assertEquals(0, unit.getScore(), 0.0);
+        assertEquals(unit.getScore(), 0.0, 0);
         unit.setScore(score1);
-        assertEquals(score1, unit.getScore(), 0.0);
+        assertEquals(unit.getScore(), 0.0, score1);
         unit.setScore(score2);
-        assertEquals(score2, unit.getScore(), 0.0);
+        assertEquals(unit.getScore(), 0.0, score2);
     }
 
-    @Test(expected=RuntimeException.class)
+    @Test
     public void cannotAddScoreGreaterThanPoints() {
-        unit.setScore(15.0);
+        Assertions.assertThrows(RuntimeException.class, () -> {
+          unit.setScore(15.0);
+        });
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void visibilityMustBeValid() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
         new GradedTestResult(GradedTestResult.DEFAULT_NAME, GradedTestResult.DEFAULT_NUMBER, GradedTestResult.DEFAULT_POINTS, "INVALID");
+        });
     }
 }

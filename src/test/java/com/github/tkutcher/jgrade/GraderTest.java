@@ -1,7 +1,7 @@
 package com.github.tkutcher.jgrade;
 
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -93,7 +93,7 @@ public class GraderTest {
 
     @Test
     public void cannotStopTimerIfNotStarted() {
-        Assertions.assertThrows(IllegalStateException.class, () -> {
+        assertThrows(IllegalStateException.class, () -> {
         unit.stopTimer();
         });
     }

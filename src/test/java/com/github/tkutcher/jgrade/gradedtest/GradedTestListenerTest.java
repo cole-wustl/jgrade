@@ -2,12 +2,20 @@ package com.github.tkutcher.jgrade.gradedtest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 //import org.junit.runner.JUnitCore;
-import org.junit.jupiter.api.extension;
-import org.junit.platform.suite.api;
+//import org.junit.jupiter.api.extension;
+//import org.junit.platform.suite.api.*;
+
+import org.junit.platform.launcher.*;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
+
+
+import org.junit.platform.engine.*;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 
 import java.util.List;
 
@@ -28,9 +36,21 @@ public class GradedTestListenerTest {
     }
 
     private void runWithListenerForExample(Class exampleUnitTests) {
-        JUnitCore runner = new JUnitCore();
-        runner.addListener(this.listener);
-        runner.run(exampleUnitTests);
+        //JUnitCore runner = new JUnitCore();
+        //runner.addListener(this.listener);
+        //runner.run(exampleUnitTests);
+        
+        LauncherDiscoveryRequest req = LauncherDiscoveryRequestBuilder.request()
+        		.selectors(
+        				selectClass(exampleUnitTests)
+        				)
+        		.build();
+        Launcher launcher = LauncherFactory.create();
+        TestPlan plan = launcher.discover(req);
+        launcher.registerTestExecutionListeners(this.listener);
+        launcher.execute(req);
+        
+    	
     }
 
     private GradedTestResult getOnlyGradedTestResult(Class exampleUnitTests) {
@@ -72,7 +92,7 @@ public class GradedTestListenerTest {
         assertEquals(EXAMPLE_NAME, result.getName());
         assertEquals(EXAMPLE_NUMBER, result.getNumber());
         assertEquals(EXAMPLE_POINTS, result.getPoints(), 0.0);
-        Assert.assertEquals(GradedTestResult.HIDDEN, result.getVisibility());
+        assertEquals(GradedTestResult.HIDDEN, result.getVisibility());
     }
 
     @Test

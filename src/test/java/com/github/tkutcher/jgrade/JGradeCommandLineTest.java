@@ -3,8 +3,8 @@ package com.github.tkutcher.jgrade;
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.After;
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -38,14 +38,14 @@ public class JGradeCommandLineTest {
 
     @Test
     public void unknownFlagExits() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
           JGrade.main(new String[] {"-blah"});
         });
     }
 
     @Test
     public void requiresClassFlag() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
           JGrade.main(new String[] {"-f", "json"});
         });
     }
@@ -67,14 +67,14 @@ public class JGradeCommandLineTest {
 
     @Test
     public void rejectsNonExistentClass() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
           JGrade.main(new String[] {"-c", "thisClassDoesNotExist"});
         });
     }
 
     @Test
     public void rejectsInvalidFormatArguments() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
           JGrade.main(new String[] {"-f", "invalid", "-c", this.getClass().getCanonicalName()});
         });
     }

@@ -1,6 +1,6 @@
 package com.github.tkutcher.jgrade;
 
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

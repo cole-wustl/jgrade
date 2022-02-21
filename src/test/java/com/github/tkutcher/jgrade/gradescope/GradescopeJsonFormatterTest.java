@@ -4,7 +4,7 @@ import com.github.tkutcher.jgrade.Grader;
 import com.github.tkutcher.jgrade.gradedtest.GradedTestResult;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,14 +26,14 @@ public class GradescopeJsonFormatterTest {
 
     @Test
     public void invalidIfEmpty() {
-        Assertions.assertThrows(GradescopeJsonException.class, () -> {
+        assertThrows(GradescopeJsonException.class, () -> {
           unit.format(grader);
         });
     }
 
     @Test
     public void invalidIfNoTestsOrScore() {
-        Assertions.assertThrows(GradescopeJsonException.class, () -> {
+        assertThrows(GradescopeJsonException.class, () -> {
           grader.setExecutionTime(45);
           unit.format(grader);
         });
@@ -53,14 +53,14 @@ public class GradescopeJsonFormatterTest {
 
     @Test
     public void catchesInvalidVisibility() {
-        Assertions.assertThrows(GradescopeJsonException.class, () -> {
+        assertThrows(GradescopeJsonException.class, () -> {
           unit.setVisibility("invisible");
         });
     }
 
     @Test
     public void catchesInvalidStdoutVisibility() {
-        Assertions.assertThrows(GradescopeJsonException.class, () -> {
+        assertThrows(GradescopeJsonException.class, () -> {
           unit.setStdoutVisibility("invisible");
         });
     }

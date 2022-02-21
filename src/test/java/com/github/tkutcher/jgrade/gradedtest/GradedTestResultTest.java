@@ -1,6 +1,6 @@
 package com.github.tkutcher.jgrade.gradedtest;
 
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,14 +61,14 @@ public class GradedTestResultTest {
 
     @Test
     public void cannotAddScoreGreaterThanPoints() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
           unit.setScore(15.0);
         });
     }
 
     @Test
     public void visibilityMustBeValid() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
         new GradedTestResult(GradedTestResult.DEFAULT_NAME, GradedTestResult.DEFAULT_NUMBER, GradedTestResult.DEFAULT_POINTS, "INVALID");
         });
     }

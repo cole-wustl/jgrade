@@ -3,14 +3,17 @@ package com.github.tkutcher.jgrade.gradedtest;
 //import org.junit.runner.Description;
 //import org.junit.runner.notification.Failure;
 //import org.junit.runner.notification.RunListener;
-import org.junit.jupiter.api.extension;
-import org.junit.platform.suite.api;
-
+//import org.junit.jupiter.api.extension;
+//import org.junit.platform.suite.api.Suite;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
+import org.junit.platform.launcher.*;
+import org.junit.platform.engine.TestExecutionResult;
 
 
 /**
@@ -25,7 +28,7 @@ import java.util.List;
  *     also most recently started (for annotated methods).
  * </p>
  */
-public class GradedTestListener extends RunListener {
+public class GradedTestListener extends SummaryGeneratingListener {
 
     private List<GradedTestResult> gradedTestResults;
     private int numFailedGradedTests;
@@ -119,8 +122,8 @@ public class GradedTestListener extends RunListener {
      * restores the original <code>PrintStream</code>.
      */
     @Override
-    public void testFinished(Description description) throws Exception {
-        super.testFinished(description);
+    public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
+        super.executionFinished(testIdentifier, testExecutionResult);
 
         if (this.currentGradedTestResult != null) {
             this.currentGradedTestResult.addOutput(testOutput.toString());
